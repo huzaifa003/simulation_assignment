@@ -48,7 +48,7 @@ public class Runway {
                 flight.setFlightStatusDeparted();
                 flight.minOutQueue = time;
                 this.departedFlights.add(flight);
-                System.out.println("Flight " + flight.flight_id + "  Departed at " + flight.minOutQueue + "After Waiting : " + flight.getWaitTime());
+//                System.out.println("Flight " + flight.flight_id + "  Departed at " + flight.minOutQueue + "After Waiting : " + flight.getWaitTime());
                 runwayTakenFlag = false;
                 return MIN_FLIGHT_TIME;
             }
@@ -67,7 +67,7 @@ public class Runway {
                 flight.setFlightStatusLanded();
                 flight.minOutQueue = time;
                 this.arrivedFlights.add(flight);
-                System.out.println("Flight " + flight.flight_id + "  Arrived on " + flight.minOutQueue + "After Waiting : " + flight.getWaitTime());
+//                System.out.println("Flight " + flight.flight_id + "  Arrived on " + flight.minOutQueue + "After Waiting : " + flight.getWaitTime());
                 runwayTakenFlag = false;
                 return MIN_FLIGHT_TIME;
             }
@@ -77,7 +77,7 @@ public class Runway {
 
     public void addDeparture(int count, int time) {
         if (count == 0) {
-            System.out.println("At time " + time + " NO new flights were scheduled for departure");
+            System.out.println("At time " + time / 60 + " : " + time%60 + " NO new flights were scheduled for departure");
             return;
         }
         System.out.println(count + " No of flights Generated FOR DEPARTURE in TIME:  " + time);
@@ -97,7 +97,7 @@ public class Runway {
 
     public void addArrival(int count, int time) {
         if (count == 0) {
-            System.out.println("At time " + time + " NO new flights were scheduled for Arrival");
+            System.out.println("At time " + time / 60 + " : " + time%60 + " NO new flights were scheduled for Arrival");
             return;
         }
         System.out.println(count + " No of flights Generated FOR ARRIVAL in TIME:  " + time);
@@ -124,17 +124,17 @@ public class Runway {
         int AvgWaitTIme = 0;
         for (int i = 0; i < this.departedFlights.size(); i++) {
             Flight flight = this.departedFlights.remove();
-            System.out.println(flight.flight_id + "DEPARTED at " + flight.minOutQueue + "AT Time: " + flight.getWaitTime() / 60 + " + \":\" + String.format(\"%02d\"," +  flight.getWaitTime()%60);
+            System.out.println(flight.flight_id + "DEPARTED AT TIME: " + flight.getWaitTime() / 60 + " : " + String.format("%02d",flight.getWaitTime()%60));
             AvgWaitTIme+= flight.getWaitTime();
         }
-        System.out.println("AVERAGE WAITING TIME FOR DEPARTURE = " +  AvgWaitTIme/ size);
+        System.out.println("AVERAGE WAITING TIME FOR DEPARTURE = " +  (AvgWaitTIme/ size) / 60 + " : " + String.format("%02d",((AvgWaitTIme/size) % 60)));
     }
 
     public void printDelayedFlights() {
         System.out.println("DELAYED FLIGHTS");
         for (int i = 0; i < this.delayedFlights.size(); i++) {
             Flight flight = this.delayedFlights.remove();
-            System.out.println(flight.flight_id + "Came at " + flight.minInQueue + "WAS : " + FlightStatus.Delayed.name());
+            System.out.println(flight.flight_id + " DELAYED AT " + flight.minInQueue / 60 + " : " + flight.minInQueue % 60);
         }
     }
 
@@ -147,17 +147,17 @@ public class Runway {
         System.out.println("Arrived FLIGHTS");
         for (int i = 0; i < this.arrivedFlights.size(); i++) {
             Flight flight = this.arrivedFlights.remove();
-            System.out.println(flight.flight_id + "ARRIVED at " + flight.minOutQueue + "AT Time: " + flight.getWaitTime() / 60 + " + \":\" + String.format(\"%02d\"," +  flight.getWaitTime()%60);
+            System.out.println(flight.flight_id + " ARRIVED AT Time: " + flight.getWaitTime() / 60 + " : "+ String.format("%02d ", flight.getWaitTime()%60));
             avgWaitTime+= flight.getWaitTime();
         }
-        System.out.println("AVERAGE WAITING TIME FOR DEPARTURE = " +  avgWaitTime/ size);
+        System.out.println("AVERAGE WAITING TIME FOR DEPARTURE = " +  (avgWaitTime/ size) / 60 + " : " + String.format("%02d",((avgWaitTime/size) % 60)));
     }
 
     public void printDivertedFlights(){
         System.out.println("DIVERTED FLIGHTS");
         for (int i = 0; i < this.divertedFlights.size(); i++) {
             Flight flight = this.divertedFlights.remove();
-            System.out.println(flight.flight_id + "Came at " + flight.minInQueue);
+            System.out.println(flight.flight_id + " DIVERTED AT " + flight.minInQueue / 60 + " : " + String.format("%02d",flight.minInQueue %60));
 
         }
     }
